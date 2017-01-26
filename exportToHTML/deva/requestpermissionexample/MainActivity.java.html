@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">deva.requestpermissionexample; 
+ 
+</span><span class="s0">import </span><span class="s1">android.Manifest; 
+</span><span class="s0">import </span><span class="s1">android.content.pm.PackageManager; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.NonNull; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.ActivityCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.content.ContextCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s2">//Permission code that will be checked in the method onRequestPermissionsResult</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">STORAGE_PERMISSION_CODE = </span><span class="s3">23</span><span class="s1">; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        </span><span class="s2">//Initializing button</span><span class="s1"> 
+        Button buttonRequestPermission = (Button) findViewById(R.id.buttonRequestPermission); 
+ 
+        </span><span class="s2">//Adding a click listener</span><span class="s1"> 
+        buttonRequestPermission.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s2">//First checking if the app is already having the permission</span><span class="s1"> 
+                </span><span class="s0">if</span><span class="s1">(isReadStorageAllowed()){ 
+                    </span><span class="s2">//If permission is already having then showing the toast</span><span class="s1"> 
+                    Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">,</span><span class="s4">&quot;You already have the permission&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+                    </span><span class="s2">//Existing the method with return</span><span class="s1"> 
+                    </span><span class="s0">return</span><span class="s1">; 
+                } 
+ 
+                </span><span class="s2">//If the app has not the permission then asking for the permission</span><span class="s1"> 
+                requestStoragePermission(); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s2">//We are calling this method to check the permission status</span><span class="s1"> 
+    </span><span class="s0">private boolean </span><span class="s1">isReadStorageAllowed() { 
+        </span><span class="s2">//Getting the permission status</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">result = ContextCompat.checkSelfPermission(</span><span class="s0">this</span><span class="s1">, Manifest.permission.READ_EXTERNAL_STORAGE); 
+ 
+        </span><span class="s2">//If permission is granted returning true</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(result == PackageManager.PERMISSION_GRANTED) 
+            </span><span class="s0">return true</span><span class="s1">; 
+ 
+        </span><span class="s2">//If permission is not granted returning false</span><span class="s1"> 
+        </span><span class="s0">return false</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s2">//Requesting permission</span><span class="s1"> 
+    </span><span class="s0">private void </span><span class="s1">requestStoragePermission(){ 
+ 
+        </span><span class="s0">if </span><span class="s1">(ActivityCompat.shouldShowRequestPermissionRationale(</span><span class="s0">this</span><span class="s1">,Manifest.permission.READ_EXTERNAL_STORAGE)){ 
+            </span><span class="s2">//If the user has denied the permission previously your code will come to this block</span><span class="s1"> 
+            </span><span class="s2">//Here you can explain why you need this permission</span><span class="s1"> 
+            </span><span class="s2">//Explain here why you need this permission</span><span class="s1"> 
+            Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">,</span><span class="s4">&quot;We need Storage Permission for exporting the files.&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+        } 
+ 
+        </span><span class="s2">//And finally ask for the permission</span><span class="s1"> 
+        ActivityCompat.requestPermissions(</span><span class="s0">this</span><span class="s1">,</span><span class="s0">new </span><span class="s1">String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE); 
+    } 
+ 
+    </span><span class="s2">//This method will be called when the user will tap on allow or deny</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onRequestPermissionsResult(</span><span class="s0">int </span><span class="s1">requestCode, @NonNull String[] permissions, @NonNull </span><span class="s0">int</span><span class="s1">[] grantResults) { 
+ 
+        </span><span class="s2">//Checking the request code of our request</span><span class="s1"> 
+        </span><span class="s0">if</span><span class="s1">(requestCode == STORAGE_PERMISSION_CODE){ 
+ 
+            </span><span class="s2">//If permission is granted</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(grantResults.length &gt;</span><span class="s3">0 </span><span class="s1">&amp;&amp; grantResults[</span><span class="s3">0</span><span class="s1">] == PackageManager.PERMISSION_GRANTED){ 
+ 
+                </span><span class="s2">//Displaying a toast</span><span class="s1"> 
+                Toast.makeText(</span><span class="s0">this</span><span class="s1">,</span><span class="s4">&quot;Permission granted now you can read the storage&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+            }</span><span class="s0">else</span><span class="s1">{ 
+                </span><span class="s2">//Displaying another toast if permission is not granted</span><span class="s1"> 
+                Toast.makeText(</span><span class="s0">this</span><span class="s1">,</span><span class="s4">&quot;Oops you just denied the permission&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+            } 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>
